@@ -1,0 +1,2479 @@
+// lab1
+#include <reg51.h>
+
+// Function declarations
+void cct_init(void);
+void delay(int);
+void lcdinit(void);
+void writecmd(int);
+void writedata(char);
+void ReturnHome(void);
+// Defines Pins
+sbit RS = P1 ^ 0;
+sbit E = P1 ^ 1;
+
+// *********************
+// Main program
+//
+void main(void)
+{
+  cct_init(); // Make all ports zero
+
+  lcdinit(); // Initilize LCD
+
+  writecmd(0x81);
+  writedata('R'); // write
+  writedata('O'); // write
+  writedata('H'); // write
+  writedata('I'); // write
+  writedata('T'); // write
+  writedata(' '); // write
+  writedata('L'); // write
+  writedata('O'); // write
+  writedata('H'); // write
+  writedata('A'); // write
+  writedata('R'); // write
+
+  writecmd(0xc1);
+
+  writedata('2'); // write
+  writedata('0'); // write
+  writedata('1'); // write
+  writedata('9'); // write
+  writedata('u'); // write
+  writedata('c'); // write
+  writedata('p'); // write
+  writedata('1'); // write
+  writedata('3'); // write
+  writedata('7'); // write
+  writedata('3'); // write
+
+  ReturnHome(); // Return to 0 position
+
+  while (1)
+  {
+  }
+}
+
+void cct_init(void)
+{
+  P0 = 0x00; // not used
+  P1 = 0x00; // not used
+  P2 = 0x00; // used as data port
+  P3 = 0x00; // used for generating E and RS
+}
+
+void delay(int a)
+{
+  int i;
+  for (i = 0; i < a; i++)
+    ; // null statement
+}
+
+void writedata(char t)
+{
+  RS = 1; // => RS = 1
+  P2 = t; // Data transfer
+  E = 1;  // => E = 1
+  delay(150);
+  E = 0; // => E = 0
+  delay(150);
+}
+
+void writecmd(int z)
+{
+  RS = 0; // => RS = 0
+  P2 = z; // Data transfer
+  E = 1;  // => E = 1
+  delay(1550);
+  E = 0; // => E = 0
+  delay(1550);
+}
+
+void lcdinit(void)
+{
+  delay(15000);
+  writecmd(0x30);
+  delay(4500);
+  writecmd(0x30);
+  delay(300);
+  writecmd(0x30);
+  delay(650);
+
+  writecmd(0x38); // function set
+  writecmd(0x0c); // display on,cursor off,blink off
+  writecmd(0x01); // clear display
+  writecmd(0x06); // entry mode, set increment
+}
+
+void ReturnHome(void) // Return to 0 location
+{
+  writecmd(0x02);
+  delay(1500);
+}
+// lab2
+
+#include <reg51.h>
+
+// Function declarations
+void cct_init(void);
+void delay(int);
+void lcdinit(void);
+void writecmd(int);
+void writedata(char);
+void ReturnHome(void);
+// Defines Pins
+sbit RS = P1 ^ 0;
+sbit E = P1 ^ 1;
+
+// *********************
+// Main program
+//
+void main(void)
+{
+  int pp = 0x80;
+  int qq = 0xc0;
+  while (1)
+  {
+    cct_init(); // Make all ports zero
+
+    lcdinit(); // Initilize LCD
+
+    writecmd(pp);
+    writedata('R'); // write
+    writedata('O'); // write
+    writedata('H'); // write
+    writedata('I'); // write
+    writedata('T'); // write
+    writedata(' '); // write
+    writedata('L'); // write
+    writedata('O'); // write
+    writedata('H'); // write
+    writedata('A'); // write
+    writedata('R'); // write
+
+    writecmd(qq);
+
+    writedata('2'); // write
+    writedata('0'); // write
+    writedata('1'); // write
+    writedata('9'); // write
+    writedata('u'); // write
+    writedata('c'); // write
+    writedata('p'); // write
+    writedata('1'); // write
+    writedata('3'); // write
+    writedata('7'); // write
+    writedata('3'); // write
+
+    pp++;
+    qq++;
+
+    if (pp == 0x92)
+    {
+      pp = 0x80;
+    }
+    if (qq == 0xd2)
+    {
+      qq = 0xc0;
+    }
+    ReturnHome(); // Return to 0 position
+  }
+}
+
+void cct_init(void)
+{
+  P0 = 0x00; // not used
+  P1 = 0x00; // not used
+  P2 = 0x00; // used as data port
+  P3 = 0x00; // used for generating E and RS
+}
+
+void delay(int a)
+{
+  int i;
+  for (i = 0; i < a; i++)
+    ; // null statement
+}
+
+void writedata(char t)
+{
+  RS = 1; // => RS = 1
+  P2 = t; // Data transfer
+  E = 1;  // => E = 1
+  delay(150);
+  E = 0; // => E = 0
+  delay(150);
+}
+
+void writecmd(int z)
+{
+  RS = 0; // => RS = 0
+  P2 = z; // Data transfer
+  E = 1;  // => E = 1
+  delay(1550);
+  E = 0; // => E = 0
+  delay(1550);
+}
+
+void lcdinit(void)
+{
+  delay(15000);
+  writecmd(0x30);
+  delay(4500);
+  writecmd(0x30);
+  delay(300);
+  writecmd(0x30);
+  delay(650);
+
+  writecmd(0x38); // function set
+  writecmd(0x0c); // display on,cursor off,blink off
+  writecmd(0x01); // clear display
+  writecmd(0x06); // entry mode, set increment
+}
+
+void ReturnHome(void) // Return to 0 location
+{
+  writecmd(0x02);
+  delay(1500);
+}
+
+// today
+#include <reg51.h>
+// Function declarations
+void cct_init(void);
+void delay(int);
+void lcdinit(void);
+void writecmd(int);
+void writedata(char);
+void ReturnHome(void);
+// Defines Pins
+sbit RS = P1 ^ 0;
+sbit E = P1 ^ 1;
+
+// *********************
+// Main program
+//
+void main(void)
+{
+  int pp = 0x80;
+  int qq = 0xd2;
+  while (1)
+  {
+    cct_init(); // Make all ports zero
+
+    lcdinit(); // Initilize LCD
+
+    writecmd(pp);
+    writedata('R'); // write
+    writedata('O'); // write
+    writedata('H'); // write
+    writedata('I'); // write
+    writedata('T'); // write
+    writedata(' '); // write
+    writedata('L'); // write
+    writedata('O'); // write
+    writedata('H'); // write
+    writedata('A'); // write
+    writedata('R'); // write
+
+    writecmd(qq);
+
+    writedata('2'); // write
+    writedata('0'); // write
+    writedata('1'); // write
+    writedata('9'); // write
+    writedata('u'); // write
+    writedata('c'); // write
+    writedata('p'); // write
+    writedata('1'); // write
+    writedata('3'); // write
+    writedata('7'); // write
+    writedata('3'); // write
+
+    pp++;
+    qq--;
+
+    if (pp == 0x92)
+    {
+      pp = 0x80;
+    }
+    if (qq == 0xc0)
+    {
+      qq = 0xd2;
+    }
+    ReturnHome(); // Return to 0 position
+  }
+}
+
+void cct_init(void)
+{
+  P0 = 0x00; // not used
+  P1 = 0x00; // not used
+  P2 = 0x00; // used as data port
+  P3 = 0x00; // used for generating E and RS
+}
+
+void delay(int a)
+{
+  int i;
+  for (i = 0; i < a; i++)
+    ; // null statement
+}
+
+void writedata(char t)
+{
+  RS = 1; // => RS = 1
+  P2 = t; // Data transfer
+  E = 1;  // => E = 1
+  delay(150);
+  E = 0; // => E = 0
+  delay(150);
+}
+
+void writecmd(int z)
+{
+  RS = 0; // => RS = 0
+  P2 = z; // Data transfer
+  E = 1;  // => E = 1
+  delay(1550);
+  E = 0; // => E = 0
+  delay(1550);
+}
+
+void lcdinit(void)
+{
+  delay(15000);
+  writecmd(0x30);
+  delay(4500);
+  writecmd(0x30);
+  delay(300);
+  writecmd(0x30);
+  delay(650);
+
+  writecmd(0x38); // function set
+  writecmd(0x0c); // display on,cursor off,blink off
+  writecmd(0x01); // clear display
+  writecmd(0x06); // entry mode, set increment
+}
+
+void ReturnHome(void) // Return to 0 location
+{
+  writecmd(0x02);
+  delay(1500);
+}
+
+// moving object
+#include <reg51.h>
+#include <string.h>
+#define LCD P2    /*Attached Lcd on Port*/
+sbit rs = P3 ^ 0; /*Configure RS Pin*/
+sbit rw = P3 ^ 1; /*Configure R/W pin*/
+sbit e = P3 ^ 2;  /*Configure Enable pin*/
+/*Function to write command on Lcd*/
+void LcdCommand(const char cCommand);
+/*Function to display message on Lcd*/
+void DisplayMessage(const char *pszMessage);
+/*Function To Initialize Lcd*/
+void LcdInit(void);
+/*Function to Provide delay*/
+void Delay(unsigned int);
+int main()
+{
+  short siLoop = 0;
+  short siLen = 0;
+  const char *pszDisplayMsg = "Rohit Lohar";
+  const char *pszDisplayMsg1 = "2019ucp1373";
+  siLen = strlen(pszDisplayMsg); /*Calculate length of Message*/
+  LcdInit();                     /*Lcd Initialize*/
+  while (1)
+  {
+
+    LcdCommand(0x8f); /*Address of DDRAM*/
+    DisplayMessage(pszDisplayMsg);
+    for (siLoop = 0; siLoop < siLen; siLoop++)
+    {
+      LcdCommand(0x18);
+      Delay(25);
+    }
+    LcdCommand(0xcf); /*Address of DDRAM*/
+    DisplayMessage(pszDisplayMsg1);
+    for (siLoop = 0; siLoop < siLen; siLoop++)
+    {
+      LcdCommand(0x18);
+      Delay(25);
+    }
+  }
+}
+/*Function to write command on Lcd*/
+void LcdCommand(const char cCommand)
+{
+  rs = 0;
+  rw = 0;
+  e = 1;
+  LCD = cCommand;
+  Delay(1);
+  e = 0;
+}
+/*Function to Display message on Lcd*/
+void DisplayMessage(const char *pszMessage)
+{
+  rs = 1;
+  rw = 0;
+  while (*pszMessage != '\0')
+  {
+    e = 1;
+    LCD = *pszMessage;
+    Delay(1);
+    e = 0;
+    pszMessage++;
+  }
+}
+/*Function to Provide Delay*/
+void Delay(unsigned int i)
+{
+  int j, k;
+  for (j = 0; j < i; j++)
+  {
+    for (k = 0; k < 1275; k++)
+      ;
+  }
+}
+/*Initialise the LCD*/
+void LcdInit(void)
+{
+  LcdCommand(0x01);
+  LcdCommand(0x38);
+  LcdCommand(0x06);
+  LcdCommand(0x0c);
+}
+
+#include <reg51.h>
+#include <string.h>
+#define Error 13
+void cct_init(void);
+void delay(int);
+void lcdinit(void);
+void writecmd(int);
+void writedata(char);
+void writeline(char[]);
+void ReturnHome(void);
+char READ_SWITCHES(void);
+char get_key(void);
+int get_num(char);
+char get_func(char);
+void DispError(int);
+void disp_num(int);
+sbit RowA = P1 ^ 0;
+sbit RowB = P1 ^ 1;
+sbit RowC = P1 ^ 2;
+sbit RowD = P1 ^ 3;
+sbit C1 = P1 ^ 4;
+sbit C2 = P1 ^ 5;
+sbit C3 = P1 ^ 6;
+sbit C4 = P1 ^ 7;
+sbit E = P3 ^ 6;
+sbit RS = P3 ^ 7;
+int main(void)
+{
+  char key;
+  int num1 = 0;
+  char func = '+';
+  int num2 = 0;
+  int i = 0, j = 0;
+  int f = 0;
+  int n1;
+  int n2;
+  i = 0;
+  cct_init();
+  lcdinit();
+  writecmd(0x01);
+  while (1)
+  {
+    while (1)
+    {
+      key = get_key();
+      writedata(key);
+      if (key != '+' && key != '-' && key != 'x' && key != '/' && key != '=' && key != 'C' && f == 0)
+      {
+        n1 = get_num(key);
+        num1 = num1 * 10 + n1;
+        i = 1;
+      }
+      else if (key != '+' && key != '-' && key != 'x' && key != '/' && key != '=' && key != 'C' && f == 1)
+      {
+        n2 = get_num(key);
+        num2 = num2 * 10 + n2;
+        j = 1;
+      }
+      else if ((key == '+' || key == '-' || key == 'x' || key == '/') && f == 0)
+      {
+        f = 1;
+        func = get_func(key);
+      }
+      else if (key == '=')
+      {
+        if (i != 0 && j != 0)
+        {
+          switch (func)
+          {
+          case '+':
+            disp_num(num1 + num2);
+            break;
+          case '-':
+            disp_num(num1 - num2);
+            break;
+          case 'x':
+            disp_num(num1 * num2);
+            break;
+          case '/':
+            disp_num(num1 / num2);
+            break;
+          }
+        }
+      }
+      else
+      {
+        if (key == 'C')
+        {
+          writecmd(0x01);
+        }
+        else
+        {
+          DispError(0);
+        }
+      }
+    }
+  }
+}
+
+void cct_init(void)
+{
+  P0 = 0x00;
+  P1 = 0xf0;
+  P2 = 0x00;
+  P3 = 0x00;
+}
+
+void delay(int a)
+{
+  int i;
+  for (i = 0; i < a; i++)
+    ;
+}
+
+void writedata(char t)
+{
+  RS = 1;
+  P2 = t;
+  E = 1;
+  delay(150);
+  E = 0;
+  delay(150);
+}
+
+void writecmd(int z)
+{
+  RS = 0;
+  P2 = z;
+  E = 1;
+  delay(150);
+  E = 0;
+  delay(150);
+}
+
+void lcdinit(void)
+{
+  delay(15000);
+  writecmd(0x30);
+  delay(4500);
+  writecmd(0x30);
+  delay(300);
+  writecmd(0x30);
+  delay(650);
+
+  writecmd(0x38);
+  writecmd(0x0c);
+  writecmd(0x01);
+  writecmd(0x06);
+}
+
+void ReturnHome(void)
+{
+  writecmd(0x02);
+  delay(1500);
+}
+
+void writeline(char Line[])
+{
+  int i;
+  for (i = 0; i < strlen(Line); i++)
+  {
+    writedata(Line[i]);
+  }
+
+  ReturnHome();
+}
+
+char READ_SWITCHES(void)
+{
+  RowA = 0;
+  RowB = 1;
+  RowC = 1;
+  RowD = 1;
+
+  if (C1 == 0)
+  {
+    delay(10000);
+    while (C1 == 0)
+      ;
+    return '7';
+  }
+  if (C2 == 0)
+  {
+    delay(10000);
+    while (C2 == 0)
+      ;
+    return '8';
+  }
+  if (C3 == 0)
+  {
+    delay(10000);
+    while (C3 == 0)
+      ;
+    return '9';
+  }
+  if (C4 == 0)
+  {
+    delay(10000);
+    while (C4 == 0)
+      ;
+    return '/';
+  }
+
+  RowA = 1;
+  RowB = 0;
+  RowC = 1;
+  RowD = 1;
+
+  if (C1 == 0)
+  {
+    delay(10000);
+    while (C1 == 0)
+      ;
+    return '4';
+  }
+  if (C2 == 0)
+  {
+    delay(10000);
+    while (C2 == 0)
+      ;
+    return '5';
+  }
+  if (C3 == 0)
+  {
+    delay(10000);
+    while (C3 == 0)
+      ;
+    return '6';
+  }
+  if (C4 == 0)
+  {
+    delay(10000);
+    while (C4 == 0)
+      ;
+    return 'x';
+  }
+
+  RowA = 1;
+  RowB = 1;
+  RowC = 0;
+  RowD = 1;
+
+  if (C1 == 0)
+  {
+    delay(10000);
+    while (C1 == 0)
+      ;
+    return '1';
+  }
+  if (C2 == 0)
+  {
+    delay(10000);
+    while (C2 == 0)
+      ;
+    return '2';
+  }
+  if (C3 == 0)
+  {
+    delay(10000);
+    while (C3 == 0)
+      ;
+    return '3';
+  }
+  if (C4 == 0)
+  {
+    delay(10000);
+    while (C4 == 0)
+      ;
+    return '-';
+  }
+
+  RowA = 1;
+  RowB = 1;
+  RowC = 1;
+  RowD = 0;
+
+  if (C1 == 0)
+  {
+    delay(10000);
+    while (C1 == 0)
+      ;
+    return 'C';
+  }
+  if (C2 == 0)
+  {
+    delay(10000);
+    while (C2 == 0)
+      ;
+    return '0';
+  }
+  if (C3 == 0)
+  {
+    delay(10000);
+    while (C3 == 0)
+      ;
+    return '=';
+  }
+  if (C4 == 0)
+  {
+    delay(10000);
+    while (C4 == 0)
+      ;
+    return '+';
+  }
+
+  return 'n';
+}
+
+char get_key(void)
+{
+  char key = 'n';
+
+  while (key == 'n')
+    key = READ_SWITCHES();
+
+  return key;
+}
+
+int get_num(char ch)
+{
+  switch (ch)
+  {
+  case '0':
+    return 0;
+    break;
+  case '1':
+    return 1;
+    break;
+  case '2':
+    return 2;
+    break;
+  case '3':
+    return 3;
+    break;
+  case '4':
+    return 4;
+    break;
+  case '5':
+    return 5;
+    break;
+  case '6':
+    return 6;
+    break;
+  case '7':
+    return 7;
+    break;
+  case '8':
+    return 8;
+    break;
+  case '9':
+    return 9;
+    break;
+  case 'C':
+    writecmd(0x01);
+    return Error;
+    break;
+  default:
+    DispError(0);
+    return Error;
+    break;
+  }
+}
+
+char get_func(char chf)
+{
+  if (chf == 'C')
+  {
+    writecmd(0x01);
+
+    return 'e';
+  }
+
+  if (chf != '+' && chf != '-' && chf != 'x' && chf != '/')
+  {
+    DispError(1);
+
+    return 'e';
+  }
+
+  return chf;
+}
+
+void DispError(int numb)
+{
+  writecmd(0x01);
+
+  switch (numb)
+  {
+  case 0:
+    writeline("Invalid Input");
+    break;
+  case 1:
+    writeline("Invalid");
+    break;
+  default:
+    writeline("Error ");
+    break;
+  }
+}
+
+void disp_num(int numb)
+{
+  int n1 = numb, i = 0, p1[10], j;
+  if (numb < 0)
+  {
+    numb = -1 * numb;
+    writedata('-');
+  }
+  n1 = numb;
+  while (n1 != 0)
+  {
+    p1[i] = n1 % 10;
+    n1 /= 10;
+    i++;
+  }
+  for (j = i - 1; j >= 0; j--)
+  {
+    writedata(p1[j] + 0x30);
+  }
+}
+
+
+
+
+
+
+//   
+#include <reg51.h>
+#include <string.h>
+#define Error 13
+void cct_init(void);
+void delay(int);
+void lcdinit(void);
+void writecmd(int);
+void writedata(char);
+void writeline(char[]);
+void ReturnHome(void);
+char READ_SWITCHES(void);
+char get_key(void);
+int get_num(char);
+char get_func(char);
+void DispError(int);
+void disp_num(int);
+sbit RowA = P1 ^ 0;
+sbit RowB = P1 ^ 1;
+sbit RowC = P1 ^ 2;
+sbit RowD = P1 ^ 3;
+sbit C1 = P1 ^ 4;
+sbit C2 = P1 ^ 5;
+sbit C3 = P1 ^ 6;
+sbit C4 = P1 ^ 7;
+sbit E = P3 ^ 6;
+sbit RS = P3 ^ 7;
+int main(void)
+{
+  char key;
+  int num1 = 0;
+  char func = '+';
+  int num2 = 0;
+  int i = 0;
+	int j = 0;
+  int f = 0;
+  int n1;
+  int n2;
+  cct_init();
+  lcdinit();
+  writecmd(0x01);
+  while (1)
+  {
+    while (1)
+    {
+      key = get_key();
+      writedata(key);
+      if (key != '+' && key != '-' && key != 'x' && key != '/' && key != '=' && key != 'C' && f == 0)
+      {
+        n1 = get_num(key);
+        num1 = num1 * 10 + n1;
+        i = 1;
+      }
+      else if (key != '+' && key != '-' && key != 'x' && key != '/' && key != '=' && key != 'C' && f == 1)
+      {
+        n2 = get_num(key);
+        num2 = num2 * 10 + n2;
+        j = 1;
+      }
+      else if ((key == '+' || key == '-' || key == 'x' || key == '/') && f == 0)
+      {
+        f = 1;
+        func = get_func(key);
+      }
+      else if (key == '=')
+      {
+        if (i != 0 && j != 0)
+        {
+          switch (func)
+          {
+          case '+':
+            disp_num(num1 + num2);
+            break;
+          case '-':
+            disp_num(num1 - num2);
+            break;
+          case 'x':
+            disp_num(num1 * num2);
+            break;
+          case '/':
+            disp_num(num1 / num2);
+            break;
+          }
+        }
+      }
+      else
+      {
+        if (key == 'C')
+        {
+          writecmd(0x01);
+        }
+        else
+        {
+          DispError(0);
+        }
+      }
+    }
+  }
+}
+
+void cct_init(void)
+{
+  P0 = 0x00;
+  P1 = 0xf0;
+  P2 = 0x00;
+  P3 = 0x00;
+}
+
+void delay(int a)
+{
+  int i;
+  for (i = 0; i < a; i++)
+    ;
+}
+
+void writedata(char t)
+{
+  RS = 1;
+  P2 = t;
+  E = 1;
+  delay(150);
+  E = 0;
+  delay(150);
+}
+
+void writecmd(int z)
+{
+  RS = 0;
+  P2 = z;
+  E = 1;
+  delay(150);
+  E = 0;
+  delay(150);
+}
+
+void lcdinit(void)
+{
+  delay(15000);
+  writecmd(0x30);
+  delay(4500);
+  writecmd(0x30);
+  delay(300);
+  writecmd(0x30);
+  delay(650);
+
+  writecmd(0x38);
+  writecmd(0x0c);
+  writecmd(0x01);
+  writecmd(0x06);
+}
+
+void ReturnHome(void)
+{
+  writecmd(0x02);
+  delay(1500);
+}
+
+void writeline(char Line[])
+{
+  int i;
+  for (i = 0; i < strlen(Line); i++)
+  {
+    writedata(Line[i]);
+  }
+
+  ReturnHome();
+}
+
+char READ_SWITCHES(void)
+{
+  RowA = 0;
+  RowB = 1;
+  RowC = 1;
+  RowD = 1;
+
+  if (C1 == 0)
+  {
+    delay(10000);
+    while (C1 == 0)
+      ;
+    return '7';
+  }
+  if (C2 == 0)
+  {
+    delay(10000);
+    while (C2 == 0)
+      ;
+    return '8';
+  }
+  if (C3 == 0)
+  {
+    delay(10000);
+    while (C3 == 0)
+      ;
+    return '9';
+  }
+  if (C4 == 0)
+  {
+    delay(10000);
+    while (C4 == 0)
+      ;
+    return '/';
+  }
+
+  RowA = 1;
+  RowB = 0;
+  RowC = 1;
+  RowD = 1;
+
+  if (C1 == 0)
+  {
+    delay(10000);
+    while (C1 == 0)
+      ;
+    return '4';
+  }
+  if (C2 == 0)
+  {
+    delay(10000);
+    while (C2 == 0)
+      ;
+    return '5';
+  }
+  if (C3 == 0)
+  {
+    delay(10000);
+    while (C3 == 0)
+      ;
+    return '6';
+  }
+  if (C4 == 0)
+  {
+    delay(10000);
+    while (C4 == 0)
+      ;
+    return 'x';
+  }
+
+  RowA = 1;
+  RowB = 1;
+  RowC = 0;
+  RowD = 1;
+
+  if (C1 == 0)
+  {
+    delay(10000);
+    while (C1 == 0)
+      ;
+    return '1';
+  }
+  if (C2 == 0)
+  {
+    delay(10000);
+    while (C2 == 0)
+      ;
+    return '2';
+  }
+  if (C3 == 0)
+  {
+    delay(10000);
+    while (C3 == 0)
+      ;
+    return '3';
+  }
+  if (C4 == 0)
+  {
+    delay(10000);
+    while (C4 == 0)
+      ;
+    return '-';
+  }
+
+  RowA = 1;
+  RowB = 1;
+  RowC = 1;
+  RowD = 0;
+
+  if (C1 == 0)
+  {
+    delay(10000);
+    while (C1 == 0)
+      ;
+    return 'C';
+  }
+  if (C2 == 0)
+  {
+    delay(10000);
+    while (C2 == 0)
+      ;
+    return '0';
+  }
+  if (C3 == 0)
+  {
+    delay(10000);
+    while (C3 == 0)
+      ;
+    return '=';
+  }
+  if (C4 == 0)
+  {
+    delay(10000);
+    while (C4 == 0)
+      ;
+    return '+';
+  }
+
+  return 'n';
+}
+
+char get_key(void)
+{
+  char key = 'n';
+  while (key == 'n')
+    key = READ_SWITCHES();
+  return key;
+}
+
+int get_num(char ch)
+{
+  switch (ch)
+  {
+  case '0':
+    return 0;
+    break;
+  case '1':
+    return 1;
+    break;
+  case '2':
+    return 2;
+    break;
+  case '3':
+    return 3;
+    break;
+  case '4':
+    return 4;
+    break;
+  case '5':
+    return 5;
+    break;
+  case '6':
+    return 6;
+    break;
+  case '7':
+    return 7;
+    break;
+  case '8':
+    return 8;
+    break;
+  case '9':
+    return 9;
+    break;
+  case 'C':
+    writecmd(0x01);
+    return Error;
+    break;
+  default:
+    DispError(0);
+    return Error;
+    break;
+  }
+}
+
+char get_func(char chf)
+{
+  if (chf == 'C')
+  {
+    writecmd(0x01);
+
+    return 'e';
+  }
+
+  if (chf != '+' && chf != '-' && chf != 'x' && chf != '/')
+  {
+    DispError(1);
+
+    return 'e';
+  }
+
+  return chf;
+}
+
+void DispError(int numb)
+{
+  writecmd(0x01);
+
+  switch (numb)
+  {
+  case 0:
+    writeline("Invalid Input");
+    break;
+  case 1:
+    writeline("Invalid");
+    break;
+  default:
+    writeline("Error ");
+    break;
+  }
+}
+
+void disp_num(int numb)
+{
+  int n1 = numb, i = 0, p1[10], j;
+  if (numb < 0)
+  {
+    numb = -1 * numb;
+    writedata('-');
+  }
+  n1 = numb;
+  while (n1 != 0)
+  {
+    p1[i] = n1 % 10;
+    n1 /= 10;
+    i++;
+  }
+  for (j = i - 1; j >= 0; j--)
+  {
+    writedata(p1[j] + 0x30);
+  }
+}
+
+#include <reg51.h>
+#include <string.h>
+#define Error 13
+void cct_init(void);
+void delay(int);
+void lcdinit(void);
+void writecmd(int);
+void writedata(char);
+void writeline(char[]);
+void ReturnHome(void);
+char READ_SWITCHES(void);
+char get_key(void);
+int get_num(char);
+char get_func(char);
+void DispError(int);
+void disp_num(int);
+sbit RowA = P1 ^ 0;
+sbit RowB = P1 ^ 1;
+sbit RowC = P1 ^ 2;
+sbit RowD = P1 ^ 3;
+sbit C1 = P1 ^ 4;
+sbit C2 = P1 ^ 5;
+sbit C3 = P1 ^ 6;
+sbit C4 = P1 ^ 7;
+sbit E = P3 ^ 6;
+sbit RS = P3 ^ 7;
+int main(void)
+{
+  char key;
+  int num1 = 0;
+  char func = '+';
+  int num2 = 0;
+  int i = 0;
+	int j = 0;
+  int f = 0;
+  int n1;
+  int n2;
+  cct_init();
+  lcdinit();
+  writecmd(0x01);
+  while (1)
+  {
+    while (1)
+    {
+      key = get_key();
+      writedata(key);
+      if (key != '+' && key != '-' && key != 'x' && key != '/' && key != '=' && key != 'C' && f == 0)
+      {
+        n1 = get_num(key);
+        num1 = num1 * 10 + n1;
+        i = 1;
+      }
+      else if (key != '+' && key != '-' && key != 'x' && key != '/' && key != '=' && key != 'C' && f == 1)
+      {
+        n2 = get_num(key);
+        num2 = num2 * 10 + n2;
+        j = 1;
+      }
+      else if ((key == '+' || key == '-' || key == 'x' || key == '/') && f == 0)
+      {
+        f = 1;
+        func = get_func(key);
+      }
+      else if (key == '=')
+      {
+        if (i != 0 && j != 0)
+        {
+          switch (func)
+          {
+          case '+':
+            disp_num(num1 + num2);
+            break;
+          case '-':
+            disp_num(num1 - num2);
+            break;
+          case 'x':
+            disp_num(num1 * num2);
+            break;
+          case '/':
+            disp_num(num1 / num2);
+            break;
+          }
+        }
+      }
+      else
+      {
+        if (key == 'C')
+        {
+          writecmd(0x01);
+        }
+        else
+        {
+          DispError(0);
+        }
+      }
+    }
+  }
+}
+
+void cct_init(void)
+{
+  P0 = 0x00;
+  P1 = 0xf0;
+  P2 = 0x00;
+  P3 = 0x00;
+}
+
+void delay(int a)
+{
+  int i;
+  for (i = 0; i < a; i++)
+    ;
+}
+
+void writedata(char t)
+{
+  RS = 1;
+  P2 = t;
+  E = 1;
+  delay(150);
+  E = 0;
+  delay(150);
+}
+
+void writecmd(int z)
+{
+  RS = 0;
+  P2 = z;
+  E = 1;
+  delay(150);
+  E = 0;
+  delay(150);
+}
+
+void lcdinit(void)
+{
+  delay(15000);
+  writecmd(0x30);
+  delay(4500);
+  writecmd(0x30);
+  delay(300);
+  writecmd(0x30);
+  delay(650);
+
+  writecmd(0x38);
+  writecmd(0x0c);
+  writecmd(0x01);
+  writecmd(0x06);
+}
+
+void ReturnHome(void)
+{
+  writecmd(0x02);
+  delay(1500);
+}
+
+void writeline(char Line[])
+{
+  int i;
+  for (i = 0; i < strlen(Line); i++)
+  {
+    writedata(Line[i]);
+  }
+
+  ReturnHome();
+}
+
+char READ_SWITCHES(void)
+{
+  RowA = 0;
+  RowB = 1;
+  RowC = 1;
+  RowD = 1;
+
+  if (C1 == 0)
+  {
+    delay(10000);
+    while (C1 == 0)
+      ;
+    return '7';
+  }
+  if (C2 == 0)
+  {
+    delay(10000);
+    while (C2 == 0)
+      ;
+    return '8';
+  }
+  if (C3 == 0)
+  {
+    delay(10000);
+    while (C3 == 0)
+      ;
+    return '9';
+  }
+  if (C4 == 0)
+  {
+    delay(10000);
+    while (C4 == 0)
+      ;
+    return '/';
+  }
+
+  RowA = 1;
+  RowB = 0;
+  RowC = 1;
+  RowD = 1;
+
+  if (C1 == 0)
+  {
+    delay(10000);
+    while (C1 == 0)
+      ;
+    return '4';
+  }
+  if (C2 == 0)
+  {
+    delay(10000);
+    while (C2 == 0)
+      ;
+    return '5';
+  }
+  if (C3 == 0)
+  {
+    delay(10000);
+    while (C3 == 0)
+      ;
+    return '6';
+  }
+  if (C4 == 0)
+  {
+    delay(10000);
+    while (C4 == 0)
+      ;
+    return 'x';
+  }
+
+  RowA = 1;
+  RowB = 1;
+  RowC = 0;
+  RowD = 1;
+
+  if (C1 == 0)
+  {
+    delay(10000);
+    while (C1 == 0)
+      ;
+    return '1';
+  }
+  if (C2 == 0)
+  {
+    delay(10000);
+    while (C2 == 0)
+      ;
+    return '2';
+  }
+  if (C3 == 0)
+  {
+    delay(10000);
+    while (C3 == 0)
+      ;
+    return '3';
+  }
+  if (C4 == 0)
+  {
+    delay(10000);
+    while (C4 == 0)
+      ;
+    return '-';
+  }
+
+  RowA = 1;
+  RowB = 1;
+  RowC = 1;
+  RowD = 0;
+
+  if (C1 == 0)
+  {
+    delay(10000);
+    while (C1 == 0)
+      ;
+    return 'C';
+  }
+  if (C2 == 0)
+  {
+    delay(10000);
+    while (C2 == 0)
+      ;
+    return '0';
+  }
+  if (C3 == 0)
+  {
+    delay(10000);
+    while (C3 == 0)
+      ;
+    return '=';
+  }
+  if (C4 == 0)
+  {
+    delay(10000);
+    while (C4 == 0)
+      ;
+    return '+';
+  }
+
+  return 'n';
+}
+
+char get_key(void)
+{
+  char key = 'n';
+  while (key == 'n')
+    key = READ_SWITCHES();
+  return key;
+}
+
+int get_num(char ch)
+{
+  switch (ch)
+  {
+  case '0':
+    return 0;
+    break;
+  case '1':
+    return 1;
+    break;
+  case '2':
+    return 2;
+    break;
+  case '3':
+    return 3;
+    break;
+  case '4':
+    return 4;
+    break;
+  case '5':
+    return 5;
+    break;
+  case '6':
+    return 6;
+    break;
+  case '7':
+    return 7;
+    break;
+  case '8':
+    return 8;
+    break;
+  case '9':
+    return 9;
+    break;
+  case 'C':
+    writecmd(0x01);
+    return Error;
+    break;
+  default:
+    DispError(0);
+    return Error;
+    break;
+  }
+}
+
+char get_func(char chf)
+{
+  if (chf == 'C')
+  {
+    writecmd(0x01);
+
+    return 'e';
+  }
+
+  if (chf != '+' && chf != '-' && chf != 'x' && chf != '/')
+  {
+    DispError(1);
+
+    return 'e';
+  }
+
+  return chf;
+}
+
+void DispError(int numb)
+{
+  writecmd(0x01);
+
+  switch (numb)
+  {
+  case 0:
+    writeline("Invalid Input");
+    break;
+  case 1:
+    writeline("Invalid");
+    break;
+  default:
+    writeline("Error ");
+    break;
+  }
+}
+
+void disp_num(int numb)
+{
+  int n1 = numb, i = 0, p1[10], j;
+  if (numb < 0)
+  {
+    numb = -1 * numb;
+    writedata('-');
+  }
+  n1 = numb;
+  while (n1 != 0)
+  {
+    p1[i] = n1 % 10;
+    n1 /= 10;
+    i++;
+  }
+  for (j = i - 1; j >= 0; j--)
+  {
+    writedata(p1[j] + 0x30);
+  }
+}
+
+////////////////////////////////////////////
+#include <reg51.h>
+#define msec 1
+
+sbit s1=P3^2;//Input pins for four candidates
+sbit s2=P3^3;
+sbit s3=P3^4;
+sbit s4=P3^5;
+
+sbit ctrl_4=P1^0;//Declare the control pins of seven segments
+sbit ctrl_3=P1^1;
+sbit ctrl_2=P1^2;
+sbit ctrl_1=P1^3;
+
+unsigned int v1,v2,v3,v4;
+
+unsigned int digi_val[10]={0x40,0xF9,0x24,0x30,0x19,0x12,0x02,0xF8,0x00,0x10};
+unsigned int dig_1,dig_2,dig_3,dig_4;
+
+
+
+void delay(unsigned int count)// Time delay function
+{
+unsigned int j,k;
+for (j=0;j<=count;j++)
+for (k=0;k<=50;k++);
+}
+
+void digi_out(unsigned int current_num)// Funtion to display total votes
+{
+unsigned int dig_disp;
+dig_disp=current_num;
+P2 = digi_val[current_num];
+delay(msec);
+}
+
+
+void calc_vote()// Funtion to count the number of votes
+{
+while(1)
+{
+if (s1==0)
+{
+while (s1 == 0);//check if switch 1 is pressed
+{
+v1 = v1 + 1;
+if(v1==10)
+v1=0;
+}
+}
+
+if (s2==0)//check if switch 2 is pressed
+{
+while (s2 == 0);
+{
+v2 = v2 + 1;
+if(v2==10)
+v2=0;
+}
+}
+
+if (s3==0)//check if switch 3 is pressed
+{
+while (s3 == 0);
+{
+v3 = v3 + 1;
+if(v3==10)
+v3=0;
+}
+}
+
+if (s4==0)//check if switch 4 is pressed
+{
+while (s4 == 0);
+{
+v4 = v4 + 1;
+if(v4==10)
+v4=0;
+}
+}
+
+ctrl_1 = 1;
+ctrl_3 = ctrl_2 = ctrl_4 = 0;
+digi_out(v1);
+ctrl_2 = 1;
+ctrl_4 = ctrl_3 = ctrl_1 = 0;
+digi_out(v2);
+ctrl_3 = 1;
+ctrl_2 = ctrl_4 = ctrl_1 = 0;
+digi_out(v3);
+ctrl_4 = 1;
+ctrl_3 = ctrl_2 = ctrl_1 = 0;
+digi_out(v4);
+}
+}
+
+
+void main()
+{
+v1 = v2 = v3 = v4 = 0;
+s1 = s2 = s3 = s4 = 1;// Initialize the input pins
+while(1)
+{
+calc_vote();
+}
+}
+
+
+
+
+
+
+
+#include <reg51.h>
+#define msec 1
+
+sbit s1 = P3 ^ 2; // Input pins for four candidates
+sbit s2 = P3 ^ 3;
+sbit s3 = P3 ^ 4;
+
+sbit ctrl_4 = P1 ^ 0; // Declare the control pins of seven segments
+sbit ctrl_3 = P1 ^ 1;
+sbit ctrl_2 = P1 ^ 2;
+sbit ctrl_1 = P1 ^ 3;
+int num = 9999;
+unsigned int v1, v2, v3, v4;
+
+unsigned int digi_val[10] = {0x40, 0xF9, 0x24, 0x30, 0x19, 0x12, 0x02, 0xF8, 0x00, 0x10};
+unsigned int dig_1, dig_2, dig_3, dig_4;
+
+void delay(unsigned int count) // Time delay function
+{
+    unsigned int j, k;
+    for (j = 0; j <= count; j++)
+        for (k = 0; k <= 50; k++)
+            ;
+}
+
+void digi_out(unsigned int current_num) // Funtion to display total votes
+{
+    unsigned int dig_disp;
+    dig_disp = current_num;
+    P2 = digi_val[current_num];
+    delay(msec);
+}
+
+void calc_vote() // Funtion to count the number of votes
+{
+    while (1)
+    {
+        /*
+        if (s1 == 0)
+        {
+            while (s1 == 0)
+                ; // check if switch 1 is pressed
+            {
+                num++;
+                if (num > 9999)
+                {
+                    num = 0;
+                }
+            }
+        }
+
+        if (s2 == 0)
+        {
+            while (s2 == 0)
+                ; // check if switch 1 is pressed
+            {
+                num--;
+                if (num < 0)
+                {
+                    num = 0;
+                }
+            }
+        }
+        if (s3 == 0)
+        {
+            while (s3 == 0)
+                ; // check if switch 1 is pressed
+            {
+                num = 0;
+            }
+        }
+        delay(1000);
+        */
+        num--;
+        // num = num % 10000;
+        if (num < 0)
+            num = 9999;
+        v4 = num % 10;
+        v3 = (num / 10) % 10;
+        v2 = (num / 100) % 10;
+        v1 = (num / 1000) % 10;
+        ctrl_1 = 1;
+        ctrl_3 = ctrl_2 = ctrl_4 = 0;
+        digi_out(v1);
+
+        ctrl_2 = 1;
+        ctrl_4 = ctrl_3 = ctrl_1 = 0;
+        digi_out(v2);
+
+        ctrl_3 = 1;
+        ctrl_2 = ctrl_4 = ctrl_1 = 0;
+        digi_out(v3);
+
+        ctrl_4 = 1;
+        ctrl_3 = ctrl_2 = ctrl_1 = 0;
+        digi_out(v4);
+    }
+}
+
+void main()
+{
+    v1 = v2 = v3 = v4 = 0;
+    s1 = s2 = s3 = 1; // Initialize the input pins
+    while (1)
+    {
+        calc_vote();
+    }
+}
+
+
+
+//counter 
+#include <reg51.h>
+#define msec 1
+void func1();
+void func2();
+void func3();
+void func4();
+sbit s1=P3^2;//Input pins for four candidates
+sbit s2=P3^3;
+sbit s3=P3^4;
+sbit s4=P3^5;
+
+sbit ctrl_4=P1^0;//Declare the control pins of seven segments
+sbit ctrl_3=P1^1;
+sbit ctrl_2=P1^2;
+sbit ctrl_1=P1^3;
+
+unsigned int v1,v2,v3,v4;
+
+unsigned int digi_val[10]={0x40,0xF9,0x24,0x30,0x19,0x12,0x02,0xF8,0x00,0x10};
+unsigned int dig_1,dig_2,dig_3,dig_4;
+
+
+
+void delay(unsigned int count)// Time delay function
+{
+unsigned int j,k;
+for (j=0;j<=count;j++)
+for (k=0;k<=50;k++);
+}
+
+void digi_out(unsigned int current_num)// Funtion to display total votes
+{
+unsigned int dig_disp;
+dig_disp=current_num;
+P2 = digi_val[current_num];
+delay(msec);
+}
+
+void func1()
+{
+	
+   v4=v4+1;
+		if(v4==10)
+		{	v4=0;
+			func2();
+			
+		}
+}
+void func2()
+{
+   v3=v3+1;
+		if(v3==10)
+		{	v3=0;
+			func3();
+			
+		}
+}
+void func3()
+{
+   v2=v2+1;
+		if(v2==10)
+		{	
+			v2=0;
+			func4();
+			
+		}
+}
+void func4()
+{
+   v1=v1+1;
+		if(v1==10)
+		{	
+			v4=0;
+			v1=0;
+			v2=0;
+			v3=0;
+		}
+}
+
+//////sub
+
+
+void calc_vote()// Funtion to count the number of votes
+{
+	while(1)
+	{
+		if (s1==0)//check if switch 4 is pressed
+		{
+			while (s1 == 0);
+			{
+			func1();
+			}
+		
+		}
+		if (s2==0)
+		{
+			while(s2==0)
+			{
+				unsigned int x=1000*v1+100*v2+10*v3+v4;
+				x--;
+				x=x%10000;
+				v4=x%10;
+				x=x/10;
+				v3=x%10;
+				x=x/10;
+				v2=x%10;
+				x=x/10;
+				v1=x%10;
+			}
+		}
+	ctrl_1 = 1;
+	ctrl_3 = ctrl_2 = ctrl_4 = 0;
+	digi_out(v1);
+	ctrl_2 = 1;
+	ctrl_4 = ctrl_3 = ctrl_1 = 0;
+	digi_out(v2);
+	ctrl_3 = 1;
+	ctrl_2 = ctrl_4 = ctrl_1 = 0;
+	digi_out(v3);
+	ctrl_4 = 1;
+	ctrl_3 = ctrl_2 = ctrl_1 = 0;
+	digi_out(v4);
+}
+	}
+
+
+
+void main()
+{
+v1 = v2 = v3 = v4 = 0;
+s1 = s2 = s3 = s4 = 1;// Initialize the input pins
+while(1)
+{
+calc_vote();
+}
+}
+
+//   to display time 
+#include <reg51.h>
+int scan_key();
+int scan_key1();
+void display();
+void start();
+void tochar(unsigned int value);
+void onemintdelay();
+sbit rs=P3^5;   //Register select (RS)
+sbit en=P3^6;   //Enable (EN) pin
+sbit r0=P1^0; 
+sbit r1=P1^1; 
+sbit r2=P1^2; 
+sbit r3=P1^3; 
+sbit c0=P1^4; 
+sbit c1=P1^5; 
+sbit c2=P1^6; 
+sbit c3=P1^7; 
+char clock[]={"CLOCK!"},hour[]="HOUR 01 to 12",mint[]="MINT 01 to 60",set[]={"RESET 1"};
+
+int count=0,H,M,S=0,hour1[1],mint1[1];
+
+
+void delay(unsigned int time)  //Time delay function
+{
+unsigned int i,j;
+for(i=0;i< time;i++)
+  for(j=0;j< 5;j++);
+}
+
+void lcdcmd(unsigned char value)  //Function for sending values to the command register of LCD
+{
+P2=value;                                 //sending commands on port 2 Means to the lcd command register
+P3=0x40;
+delay(50);
+en=0;
+delay(50);
+return;
+}
+
+void lcddata(unsigned char value)  //Function for sending values to the data register of LCD
+{
+P2=value;                                //sending data on port 2 Means to the lcd data register 
+P3=0x60;
+delay(50);
+en=0;
+delay(50);
+return;
+}
+void lcdint(void)         
+{
+	P1=0xFF;
+P2=0x00;                 
+P3=0x00;
+     delay(15000);
+     lcddata(0x30);
+     delay(4500);
+     lcddata(0x30);
+     delay(300);
+     lcddata(0x30);
+     delay(650);
+lcdcmd(0x38);
+delay(50);
+lcdcmd(0x0C);
+delay(50);
+lcdcmd(0x01);
+delay(50);
+lcdcmd(0x06);
+delay(50);
+lcdcmd(0x80);
+delay(50);
+}
+
+void settime()
+{
+lcdcmd(0x01);
+	lcdcmd(0x80);
+	while(hour[count]!='\0'){
+	lcddata(hour[count]);
+	count++;
+	}
+	count=0;
+	lcdcmd(0xC8);
+	while(count!=2){
+	hour1[count]=scan_key();
+	count++;
+	}
+	H=(hour1[0]*10)+hour1[1];
+	count=0;
+	lcdcmd(0x01);
+	lcdcmd(0x80);
+	while(mint[count]!='\0'){
+	lcddata(mint[count]);
+	count++;
+	}
+	count=0;
+	lcdcmd(0xC8);
+	while(count!=2){
+	mint1[count]=scan_key();
+	count++;
+	}
+	M=(mint1[0]*10)+mint1[1];
+	count=0;
+	delay(3333);
+lcdcmd(0x01);
+lcdcmd(0x80);	
+}
+
+void onemintdelay()
+{
+int count1=0,sec,check;
+xyz:
+S=2;
+for(sec=0;sec<59;sec++){
+count1=0;
+while(count1!=500)
+{
+TMOD=0x01;
+TH0=0xF8;
+TL0=0xCC;
+TR0=1;
+while(!TF0);
+TR0 = 0;
+TF0 = 0;
+count1++;
+}
+S++;
+lcdcmd(0xCB);
+tochar(S);
+
+check=scan_key1();
+if(check==1)
+{
+start();
+goto xyz;
+}
+}		  
+display();
+}
+
+
+void main()
+{
+lcdint();
+start();
+while(1){
+	onemintdelay();}
+}
+void start()
+{
+settime();
+delay(33);
+	count=0;
+	lcdcmd(0x01);
+	lcdcmd(0x80);
+	while(set[count]!='\0'){
+	lcddata(set[count]);
+	count++;
+	}
+	count=0;
+	lcdcmd(0x89);
+while(clock[count]!='\0'){
+	lcddata(clock[count]);
+	count++;
+}
+count=0;
+lcdcmd(0xC4);
+tochar(H);
+lcddata(':');
+tochar(M);
+lcdcmd(0xCB);
+tochar(S);
+
+}
+
+
+void display(){
+	count=0;
+	lcdcmd(0x01);
+	lcdcmd(0x80);
+	while(set[count]!='\0'){
+	lcddata(set[count]);
+	count++;
+	}
+	count=0;
+	lcdcmd(0x89);
+while(clock[count]!='\0'){
+	lcddata(clock[count]);
+	count++;
+}
+count=0;
+
+
+
+if(H==12 && M>=60 && S>=60)
+{S=1;H=1;M=1;}
+if(M>=60)
+{H++;M=1;S=1;}
+if(S>=60)
+{M++;S=1;}
+
+
+lcdcmd(0xC4);
+tochar(H);
+lcddata(':');
+tochar(M);
+lcdcmd(0xCB);
+tochar(S);
+}
+
+
+int scan_key()
+{
+	unsigned int c;
+	c=22;
+	while(!(c==0 && c==1 &&  c==2 && c==3 && c==4 && c==5 && c==6 && c==7 && c==8 && c==9 ))
+	{
+r0=0;r1=1;r2=1;r3=1;
+	if(c0==0 && r0==0 )
+		{lcddata('1');delay(100000);P1=0xFF;return c=1;}
+    	if(c1==0 && r0==0)
+		{ lcddata('2');delay(100000);P1=0xFF;return c=2;}
+	if(c2==0 && r0==0)
+		{ lcddata('3');delay(100000);P1=0xFF;return c=3;}
+	if(c3==0 && r0==0)
+		{ lcddata('4');delay(100000);P1=0xFF;return c=4;}
+  
+r0=1;r1=0;r2=1;r3=1;
+
+	if(c0==0 && r1==0)
+		{ lcddata('5');delay(100000);P1=0xFF;return c=5;}
+    	if(c1==0 && r1==0)
+		{ lcddata('6');delay(100000);P1=0xFF;return c=6;}
+	if(c2==0 && r1==0)
+		{ lcddata('7');delay(100000);P1=0xFF;return c=7;}
+	if(c3==0 && r1==0)
+		{ lcddata('8');delay(100000);P1=0xFF;return c=8;}
+
+r0=1;r1=1;r2=0;r3=1;
+
+	if(c0==0 && r2==0)
+		{ lcddata('9');delay(100000);P1=0xFF;return c=9;}
+    	if(c1==0 && r2==0)
+		{ lcddata('0');delay(100000);P1=0xFF;return c=0;}
+}
+P1=0xFF;
+return 0;
+}
+void tochar(unsigned int value)
+{
+	char tendigit,unitdigit;
+	tendigit=value/10;
+	lcddata(tendigit+48);
+	unitdigit=value%10;
+	lcddata(unitdigit+48);
+}
+int scan_key1()
+{
+int c;
+r0=0;r1=1;r2=1;r3=1;
+	if(c0==0 && r0==0 )
+		{c=1;}
+		else c=0;
+		P1=0xFF;
+		return c;
+}
+
+
+//  display hexadecimal number
+
+#include<reg51.h>
+#define display_port P2      //Data pins connected to port 2 on microcontroller
+sbit rs = P3^2;  //RS pin connected to pin 2 of port 3
+sbit rw = P3^3;  // RW pin connected to pin 3 of port 3
+sbit e =  P3^4;//E pin connected to pin 4 of port 3
+
+sbit C4 = P1^0;// Connecting keypad to Port 1
+sbit C3 = P1^1;
+sbit C2 = P1^2;
+sbit C1 = P1^3;
+sbit R4 = P1^4;
+sbit R3 = P1^5;
+sbit R2 = P1^6;
+sbit R1 = P1^7;
+
+int total=0;
+void msdelay(unsigned int time)  // Function for creating delay in milliseconds.
+{
+    unsigned i,j ;
+    for(i=0;i<time;i++)    
+    for(j=0;j<1275;j++);
+}
+void lcd_cmd(unsigned char command)  //Function to send command instruction to LCD
+{
+    display_port = command;
+    rs= 0;
+    rw=0;
+    e=1;
+    msdelay(1);
+    e=0;
+}
+
+void lcd_data(unsigned char disp_data)  //Function to send display data to LCD
+{
+    display_port = disp_data;
+    rs= 1;
+    rw=0;
+    e=1;
+    msdelay(1);
+    e=0;
+}
+
+ void lcd_init()    //Function to prepare the LCD  and get it ready
+{
+    lcd_cmd(0x38);  // for using 2 lines and 5X7 matrix of LCD
+    msdelay(10);
+    lcd_cmd(0x0F);  // turn display ON, cursor blinking
+    msdelay(10);
+    lcd_cmd(0x01);  //clear screen
+    msdelay(10);
+    lcd_cmd(0x81);  // bring cursor to position 1 of line 1
+    msdelay(10);
+}
+
+void row_finder1() //Function for finding the row for column 1
+{
+R1=R2=R3=R4=1;
+C1=C2=C3=C4=0;
+
+if(R1==0)
+lcd_data('1');
+if(R2==0)
+lcd_data('4');
+if(R3==0)
+lcd_data('7');
+if(R4==0)
+lcd_data('F');
+}
+
+void row_finder2() //Function for finding the row for column 2
+{
+R1=R2=R3=R4=1;
+C1=C2=C3=C4=0;
+
+if(R1==0)
+lcd_data('2');
+if(R2==0)
+lcd_data('5');
+if(R3==0)
+lcd_data('8');
+if(R4==0)
+lcd_data('0');
+}
+
+void row_finder3() //Function for finding the row for column 3
+{
+R1=R2=R3=R4=1;
+C1=C2=C3=C4=0;
+
+if(R1==0)
+lcd_data('3');
+if(R2==0)
+lcd_data('6');
+if(R3==0)
+lcd_data('9');
+if(R4==0)
+lcd_data('E');
+}
+
+void row_finder4() //Function for finding the row for column 4
+{
+	R1=R2=R3=R4=1;
+	C1=C2=C3=C4=0;
+
+	if(R1==0)
+	lcd_data('A');
+	if(R2==0)
+	lcd_data('B');
+	if(R3==0)
+	lcd_data('C');
+	if(R4==0)
+	lcd_data('D');
+}
+
+void main()
+{
+    lcd_init();
+    while(1)
+    {    
+					  msdelay(30); 
+           C1=C2=C3=C4=1;
+          R1=R2=R3=R4=0;
+          if(C1==0)
+          row_finder1();
+          else if(C2==0)
+           row_finder2();
+           else if(C3==0)
+						row_finder3();
+						else if(C4==0)
+						row_finder4();
+    }
+}
