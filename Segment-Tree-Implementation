@@ -1,0 +1,88 @@
+#include <bits/stdc++.h>
+using namespace std;
+void fast_io()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+    freopen("in.txt", "r", stdin);
+    freopen("ot.txt", "w", stdout);
+}
+class segmentTree
+{
+    int n;
+    vector<int> st;
+
+public:
+    segmentTree(int n)
+    {
+        this->n = n;
+        st.resize(4 * n);
+    }
+    void built(int ind, int low, int high, int *arr)
+    {
+        if (low == high)
+        {
+            st[ind] = arr[low];
+            return;
+        }
+        int mid = low + (high - low) / 2;
+        built(2 * ind + 1, low, mid, arr);
+        built(2 * ind + 2, mid + 1, high, arr);
+        st[ind] = min(st[2 * ind + 1], st[2 * ind + 2]);
+    }
+    int querry(int ind, int low, int high, int a, int b)
+    {
+        if (b < low or a > high)
+            return INT_MAX;
+        if (a <= low and high <= b)
+            return st[ind];
+        int mid = low + (high - low) / 2;
+        int left = querry(2 * ind + 1, low, mid, a, b);
+        int right = querry(2 * ind + 2, mid + 1, high, a, b);
+        return min(left, right);
+    }
+    void updatee(int ind, int low, int high, int i, int val)
+    {
+        if (low == high)
+        {
+            st[ind] = val;
+            return;
+        }
+        int mid = low + (high - low) / 2;
+        if (i <= mid)
+            updatee(2 * ind + 1, low, mid, i, val);
+        else
+            updatee(2 * ind + 2, mid + 1, high, i, val);
+        st[ind] = min(st[2 * ind + 1], st[2 * ind + 2]);
+    }
+};
+int main()
+{
+    fast_io();
+    
+    int n;
+    cin >> n;
+    int arr[n], st[2 * n];
+    for (int i = 0; i < n; i++)
+    {
+        cin >> arr[i];
+    }
+    segmentTree s1(n);
+    s1.built(0, 0, n - 1, arr);
+    int q;
+    cin >> q;
+    while (q--)
+    {
+        int t, x, y;
+        cin >> t >> x >> y;
+        if (t == 1)
+            cout << s1.querry(0, 0, n - 1, x, y) << "\n";
+        else
+        {
+            s1.updatee(0, 0, n - 1, x, y);
+            arr[x] = y;
+        }
+    }
+    return 0;
+}
