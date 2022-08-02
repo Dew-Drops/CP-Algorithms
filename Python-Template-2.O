@@ -1,0 +1,267 @@
+import os
+import sys
+import sys
+import os.path
+from io import BytesIO, IOBase
+#-----------------------IMPORTANT  FUNCTIONS ---------------------------------#
+from math import cos, pi, ceil, pi, tan, floor, gcd, sqrt, log2, factorial, log10
+from collections import Counter
+from copy import deepcopy
+from string import ascii_lowercase, ascii_uppercase
+from statistics import mean, median, mode
+from bisect import *
+
+
+
+
+alpha = ascii_lowercase
+beta = ascii_uppercase
+
+
+#-----------------------NEXT POWER OF 2---------------------------------------#
+def nextPowerOf2(n):
+    p = 1
+    if (n and not (n & (n - 1))):
+        return n
+    while (p < n):
+        p <<= 1
+    return p
+
+
+#-----------------------COMPOSITE  CHECK---------------------------------------#
+def isComposite(n):
+    if (n <= 1):
+        return False
+    if (n <= 3):
+        return False
+    if (n % 2 == 0 or n % 3 == 0):
+        return True
+    i = 5
+    while (i * i <= n):
+        if (n % i == 0 or n % (i + 2) == 0):
+            return True
+        i = i + 6
+    return False
+
+
+#-----------------------GET DIVISORS 1 TO <=N   ------------------------------#
+def get_Divisors(n):
+    arr = []
+    i = 1
+    while i <= sqrt(n):
+        if (n % i == 0):
+            if (n / i == i):
+                arr.append(i)
+            else:
+                arr.append(i)
+                arr.append(n // i)
+        i = i + 1
+
+    return arr
+
+
+#----------------------CHECK    PRIMES-----------------------------------#
+def isprime(n):
+    if n == 1:
+        return 0
+    i = 2
+    while (i * i <= n):
+        if (n % i == 0):
+            return 0
+        i += 1
+    return 1
+
+
+#-----------------------PRE COMPUTED  PRIMES-----------------------------------#
+def Sieve(n):
+    prime = [True for i in range(n + 1)]
+    prime[0] = False
+    prime[1] = False
+    p = 2
+    while (p * p <= n):
+        if (prime[p] == True):
+            for i in range(p * p, n + 1, p):
+                prime[i] = False
+        p += 1
+    return prime
+
+
+#-----------------------LARGER VALUE OF  X,Y,10**9+7 --------------------------#
+def power(x, y, p):
+    res = 1
+    x = x % p
+    if (x == 0):
+        return 0
+    while (y > 0):
+        if ((y & 1) == 1):
+            res = (res * x) % p
+        y = y >> 1
+        x = (x * x) % p
+    return res
+
+
+#-----------------------       CREATE MATRIX         --------------------------#
+def create_matrix(n, m):
+    mat = [[] for i in range(n)]
+    for i in range(n):
+        for j in range(m):
+            mat[i].append(0)
+    return mat
+
+#------------------------find all prime factors---------------------------#
+
+
+def allprimeFactors(n):
+    res = []
+    while n % 2 == 0:
+        res.append(2)
+        n = n // 2
+    for i in range(3, int(sqrt(n))+1, 2):
+        while n % i == 0:
+            res.append(i)
+            n = n // i
+    if n > 2:
+        res.append(n)
+    return res
+
+#-----------------------check  if n is power of two or not--------------------#
+
+
+def ispoweroftwo(n):
+    if n == 1:
+        return True
+    elif n % 2 != 0 or n == 0:
+        return False
+    return ispoweroftwo(n/2)
+
+
+if(os.path.exists('in.txt')):
+    sys.stdin = open("in.txt", "r")
+    sys.stdout = open("ot.txt", "w")
+# By Default Counter stores the value in decending orderCounter({4: 2, 8: 2, 2: 1, 9: 1}
+# s=sorted(s.items(),key=lambda k:(k[0],k[1])) ---> [(2, 1), (4, 2), (8, 2), (9, 1)]
+# sort 2nd value  from bada se chhota  then(4,2)(8,2)->>(8,2)(4,2) s=sorted(s.items(),key=lambda k:(-k[1],-k[0]))  [(8, 2), (4, 2), (9, 1), (2, 1)]
+# for list pair in a list    s.sort(key=lambda k:(-k[1],-k[0])) [[3, 4], [8, 2], [4, 2]]
+# from functools import cmp_to_key
+# how to use compare ----ss = sorted(s, key=cmp_to_key(compare))
+#-----------------------*****CODE STARTS  HERE*****--------------------------#
+# from queue import Queue
+# from random import *
+
+
+def Lngst_non_dec_subsequence(arr):
+    sub = []
+    for i, x in enumerate(arr):
+        if len(sub) == 0 or sub[-1] <= x:
+            sub.append(x)
+        else:
+            idx = bisect_right(sub, x)
+            sub[idx] = x
+    print(sub)
+    return len(sub)
+
+
+def lis(arr):
+    sub = []
+    for i, x in enumerate(arr):
+        if len(sub) == 0 or sub[-1] < x:
+            sub.append(x)
+
+        else:
+            idx = bisect_left(sub, x)
+            sub[idx] = x
+    print(sub)
+    return len(sub)
+
+
+def sortedarr(arr):
+    for i in range(len(arr)-1):
+        if arr[i] > arr[i+1]:
+            return False
+    return True
+
+
+def main():
+    for ttt in range(int(input())):
+        n,k=map(int,input().split())
+        s=input()
+        ch='a'
+        res1='z'
+        res2='y'
+        for i in range(n):
+            if s[i]>ch:
+                x=ord(s[i])-ord(ch)
+                if x>k:
+                    temp=ord(s[i])-k
+                    res1=chr(temp)
+                    k=0 
+                    res2=s[i]
+                    if k==0:
+                        break
+                else:
+                    k-=x 
+                    ch=s[i]
+        ss=[] 
+        for i in range(n):
+            if s[i]<=ch:
+                ss.append('a')
+            elif res1<=s[i]<=res2:
+                ss.append(res1)
+            else:
+                ss.append(s[i])
+        print("".join(ss))   
+             
+            
+        
+        
+# region fast___io
+BUFSIZE = 8192
+
+
+class FastIO(IOBase):
+    newlines = 0
+
+    def __init__(self, file):
+        self._fd = file.fileno()
+        self.buffer = BytesIO()
+        self.writable = "x" in file.mode or "r" not in file.mode
+        self.write = self.buffer.write if self.writable else None
+
+    def read(self):
+        while True:
+            b = os.read(self._fd, max(os.fstat(self._fd).st_size, BUFSIZE))
+            if not b:
+                break
+            ptr = self.buffer.tell()
+            self.buffer.seek(0, 2), self.buffer.write(b), self.buffer.seek(ptr)
+        self.newlines = 0
+        return self.buffer.read()
+
+    def readline(self):
+        while self.newlines == 0:
+            b = os.read(self._fd, max(os.fstat(self._fd).st_size, BUFSIZE))
+            self.newlines = b.count(b"\n") + (not b)
+            ptr = self.buffer.tell()
+            self.buffer.seek(0, 2), self.buffer.write(b), self.buffer.seek(ptr)
+        self.newlines -= 1
+        return self.buffer.readline()
+
+    def flush(self):
+        if self.writable:
+            os.write(self._fd, self.buffer.getvalue())
+            self.buffer.truncate(0), self.buffer.seek(0)
+
+
+class IOWrapper(IOBase):
+    def __init__(self, file):
+        self.buffer = FastIO(file)
+        self.flush = self.buffer.flush
+        self.writable = self.buffer.writable
+        self.write = lambda s: self.buffer.write(s.encode("ascii"))
+        self.read = lambda: self.buffer.read().decode("ascii")
+        self.readline = lambda: self.buffer.readline().decode("ascii")
+if(not os.path.exists('in.txt')):
+    sys.stdin, sys.stdout = IOWrapper(sys.stdin), IOWrapper(sys.stdout)
+    def input(): return sys.stdin.readline().rstrip("\r\n")
+if __name__ == "__main__":
+    main()
